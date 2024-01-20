@@ -55,20 +55,20 @@ module.exports = grammar({
     each: $ => seq(
       '(',
       'each',
-      '[',
       $.iter_bindings,
-      ']',
       repeat($._sexp),
       ')',
     ),
 
     iter_bindings: $ => seq(
+      '[',
       repeat($._binding),
       field('iterator', $._sexp),
       optional(seq(
         ':until',
         field('until', $._sexp),
       )),
+      ']',
     ),
 
     for: $ => seq(
@@ -293,14 +293,16 @@ module.exports = grammar({
       'where',
       choice(
         $._simple_pattern,
-        seq(
-          '(',
-          'or',
-          repeat($._simple_pattern),
-          ')',
-        ),
+        $.or_simple_patterns,
       ),
       field('guard', repeat($._sexp)),
+      ')',
+    ),
+
+    or_simple_patterns: $ => seq(
+      '(',
+      'or',
+      repeat($._simple_pattern),
       ')',
     ),
 
@@ -342,9 +344,7 @@ module.exports = grammar({
     collect: $ => seq(
       '(',
       'collect',
-      '[',
       $.iter_bindings,
-      ']',
       repeat($._sexp),
       ')',
     ),
@@ -352,9 +352,7 @@ module.exports = grammar({
     icollect: $ => seq(
       '(',
       'icollect',
-      '[',
       $.iter_bindings,
-      ']',
       repeat($._sexp),
       ')',
     ),
@@ -362,13 +360,22 @@ module.exports = grammar({
     accumulate: $ => seq(
       '(',
       'accumulate',
+      $.accumulate_clause,
+      repeat($._sexp),
+      ')',
+    ),
+
+    accumulate_clause: $ => seq(
       '[',
       $._binding,
       $._sexp,
-      $.iter_bindings,
+      repeat($._binding),
+      field('iterator', $._sexp),
+      optional(seq(
+        ':until',
+        field('until', $._sexp),
+      )),
       ']',
-      repeat($._sexp),
-      ')',
     ),
 
     quote: $ => choice(

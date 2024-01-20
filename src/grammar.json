@@ -119,16 +119,8 @@
           "value": "each"
         },
         {
-          "type": "STRING",
-          "value": "["
-        },
-        {
           "type": "SYMBOL",
           "name": "iter_bindings"
-        },
-        {
-          "type": "STRING",
-          "value": "]"
         },
         {
           "type": "REPEAT",
@@ -146,6 +138,10 @@
     "iter_bindings": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
         {
           "type": "REPEAT",
           "content": {
@@ -185,6 +181,10 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "STRING",
+          "value": "]"
         }
       ]
     },
@@ -1009,28 +1009,8 @@
               "name": "_simple_pattern"
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "("
-                },
-                {
-                  "type": "STRING",
-                  "value": "or"
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_simple_pattern"
-                  }
-                },
-                {
-                  "type": "STRING",
-                  "value": ")"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "or_simple_patterns"
             }
           ]
         },
@@ -1043,6 +1023,30 @@
               "type": "SYMBOL",
               "name": "_sexp"
             }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "or_simple_patterns": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": "or"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_simple_pattern"
           }
         },
         {
@@ -1175,16 +1179,8 @@
           "value": "collect"
         },
         {
-          "type": "STRING",
-          "value": "["
-        },
-        {
           "type": "SYMBOL",
           "name": "iter_bindings"
-        },
-        {
-          "type": "STRING",
-          "value": "]"
         },
         {
           "type": "REPEAT",
@@ -1211,16 +1207,8 @@
           "value": "icollect"
         },
         {
-          "type": "STRING",
-          "value": "["
-        },
-        {
           "type": "SYMBOL",
           "name": "iter_bindings"
-        },
-        {
-          "type": "STRING",
-          "value": "]"
         },
         {
           "type": "REPEAT",
@@ -1247,6 +1235,26 @@
           "value": "accumulate"
         },
         {
+          "type": "SYMBOL",
+          "name": "accumulate_clause"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sexp"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "accumulate_clause": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "STRING",
           "value": "["
         },
@@ -1259,23 +1267,48 @@
           "name": "_sexp"
         },
         {
-          "type": "SYMBOL",
-          "name": "iter_bindings"
-        },
-        {
-          "type": "STRING",
-          "value": "]"
-        },
-        {
           "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_binding"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "iterator",
           "content": {
             "type": "SYMBOL",
             "name": "_sexp"
           }
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ":until"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "until",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_sexp"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
-          "value": ")"
+          "value": "]"
         }
       ]
     },
